@@ -31,7 +31,17 @@ class S00_1_ContagionTest extends BaseIntegrationTest {
     NotificationClient notificationClient;
 
     @Test
-    @DisplayName("알림 서비스 장애 시 주문 생성도 실패한다")
+    @DisplayName("정상: 알림 서비스가 정상이면 주문이 성공한다")
+    void orderSucceedsWhenNotificationServiceIsHealthy() {
+        // 알림 서비스 정상 (MockBean 기본 동작: 아무것도 안 하고 정상 리턴)
+
+        orderService.createOrder("keyboard", 1, 89000);
+
+        assertThat(orderRepository.findAll()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("장애: 알림 서비스 장애 시 주문 생성도 실패한다")
     void externalFailureCascadesToOrderCreation() {
         // 알림 서비스가 타임아웃으로 예외를 던진다
         doThrow(new RuntimeException("Connection timed out: notification service"))
