@@ -7,18 +7,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest
-@Testcontainers
 abstract class BaseIntegrationTest {
 
-    @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("playground")
             .withUsername("root")
             .withPassword("root");
+
+    static {
+        mysql.start();
+    }
 
     @Autowired
     JdbcTemplate jdbcTemplate;
