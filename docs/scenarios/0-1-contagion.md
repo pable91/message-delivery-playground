@@ -26,9 +26,10 @@ sequenceDiagram
 
 ```java
 @Transactional
-public void createOrder(OrderRequest request) {
-    Order order = orderRepository.save(new Order(request));
-    notificationClient.sendOrderConfirmation(order);  // 동기 HTTP 호출
+public Order createOrder(String itemName, int quantity, int totalPrice) {
+    Order order = orderRepository.save(new Order(itemName, quantity, totalPrice));
+    notificationClient.sendOrderConfirmation(order.getId());  // 동기 HTTP 호출
+    return order;
 }
 ```
 
