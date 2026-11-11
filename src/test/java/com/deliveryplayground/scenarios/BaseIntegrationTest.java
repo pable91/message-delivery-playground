@@ -33,5 +33,6 @@ abstract class BaseIntegrationTest {
     @BeforeEach
     void cleanUp() {
         jdbcTemplate.execute("TRUNCATE TABLE orders");
+        jdbcTemplate.execute("TRUNCATE TABLE outbox_events");
     }
 }
