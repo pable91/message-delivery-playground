@@ -40,7 +40,7 @@ public void handleOrderCreated(OrderCreatedEvent event) {
 }
 ```
 
-`@TransactionalEventListener(phase = AFTER_COMMIT)`. DB 트랜잭션이 커밋된 후에 이벤트를 발행한다. 이러면 DB 커밋 실패 시 발행도 안 되니까 유령 이벤트 문제(#1)는 없다. 똑똑한 설계처럼 보였다.
+`@TransactionalEventListener(phase = AFTER_COMMIT)`. DB 트랜잭션이 커밋된 후에 이벤트를 발행한다. 이러면 DB 커밋 실패 시 발행도 안 되니까 유령 이벤트 문제는 없다. 똑똑한 설계처럼 보였다.
 
 수요일 오후 4시 15분. 주문이 들어왔다. DB 커밋 성공. `AFTER_COMMIT` 리스너가 실행됐다. `convertAndSend()` 호출. 그런데 바로 이 순간 RabbitMQ 커넥션이 끊겼다. `AmqpConnectException`.
 
