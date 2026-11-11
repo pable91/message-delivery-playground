@@ -45,7 +45,7 @@ class S00_4_EventBirthTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("장애(예외 전파): 브로커 다운 시 주문도 롤백된다 — 전염 반복")
+    @DisplayName("장애(예외 전파): 브로커 다운 시 주문도 롤백된다 — (S00_1에서 발생한) 전염 반복")
     void brokerFailureCascadesToOrderCreation() {
         doThrow(new AmqpConnectException(new RuntimeException("Connection refused")))
                 .when(rabbitTemplate).convertAndSend(anyString(), anyString(), any(Object.class));
