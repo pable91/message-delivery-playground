@@ -19,6 +19,7 @@ public class OutboxEvent {
     private Long aggregateId;
     private String eventType;
     private String payload;
+    private String status = "INIT";
     private LocalDateTime createdAt;
 
     protected OutboxEvent() {
@@ -50,6 +51,14 @@ public class OutboxEvent {
 
     public String getPayload() {
         return payload;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void markAsSent() {
+        this.status = "SENT";
     }
 
     public LocalDateTime getCreatedAt() {
